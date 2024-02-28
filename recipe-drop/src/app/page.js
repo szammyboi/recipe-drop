@@ -10,7 +10,7 @@ const Home = async () => {
     <div className="bg-recipe-tan h-screen w-screen">
       <h1 className="text-6xl font-bold text-recipe-orange ml-1">RECIPE DROP</h1>
       <h2 className="text-2xl font-bold text-recipe-orange ml-2">the next up recipe book</h2>
-      <SignInRedirectButton />
+      <SignInRedirectButton/>
     </div>
   );
 }
