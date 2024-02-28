@@ -3,7 +3,7 @@
 'use server';
 
 import { SIGN_IN_URL } from "@/routes";
-import { NHOST_SESSION_KEY, getAuthClient } from "./nhost";
+import { NHOST_SESSION_KEY, getAuthClient } from "@/utils/nhost";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 

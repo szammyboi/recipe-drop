@@ -1,6 +1,6 @@
 import SignOutButton from "@/components/sign-out";
 import withAuthGuard from "@/utils/guard";
-import { signOut } from "@/utils/sign-out";
+import { signOut } from "@/app/actions/sign-out";
 
 import "@/app/globals.css";
 
