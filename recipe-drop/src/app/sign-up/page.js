@@ -5,7 +5,7 @@ import "@/app/globals.css";
 const SignUp = () => {
 
     return (
-        <div className="bg-recipe-tan h-screen w-screen">
+        <div className="bg-recipe-tan h-screen w-screen flex items-center justify-center">
             <SignUpForm />
         </div>
     )

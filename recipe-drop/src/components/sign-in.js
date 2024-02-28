@@ -32,13 +32,16 @@ const SignInForm = () => {
         <div className="w-full max-w-xs shadow-md rounded px-8 pt-6 pb-8 mb-4 bg-white border-y-recipe-orange">
             <form onSubmit={handleLogin}>
                 <div className="mb-6">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                    <h1 className="block text-gray-700 text-xl font-bold mb-2">Sign in with email</h1>
+                </div>
+                <div className="mb-6">
+                    <label className="block text-gray-700 text-sm font-bold mb-2">
                         Email
                     </label>
                     <input className="block text-gray-700 text-lg mb-4 appearance-none border-b border-slate-950 hover:border-recipe-orange focus:border-recipe-orange w-full focus:outline-none" placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                 </div>
                 <div className="mb-6">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                    <label className="block text-gray-700 text-sm font-bold mb-2">
                         Password
                     </label>
                     <input className="block text-gray-700 text-lg mb-4 appearance-none border-b border-slate-950 hover:border-recipe-orange focus:border-recipe-orange w-full focus:outline-none" type="password" placeholder="******************" value={password} onChange={(e) => setPassword(e.target.value)}/>
@@ -46,7 +49,7 @@ const SignInForm = () => {
                     
                 </div>
                 <div className="flex items-center justify-between">
-                <button className="my-5 bg-transparent hover:bg-recipe-orange text-recipe-orange font-semibold hover:text-recipe-tan py-2 px-4 border border-recipe-orange hover:border-transparent rounded" onClick={handleLogin}>Login</button>
+                <button className="my-5 bg-transparent hover:bg-recipe-orange text-recipe-orange font-semibold hover:text-recipe-tan py-2 px-4 border border-recipe-orange hover:border-transparent rounded" onClick={handleLogin}>Sign In</button>
                 
                 </div>
                 <div className="flex items-left justify-between">
