@@ -4,6 +4,8 @@ import "@/app/globals.css";
 
 import { signIn } from "@/app/actions/sign-in";
 import { useEffect, useState } from "react";
+import Link from 'next/link';
+
 
 const SignInForm = () => {
     const [failed, setFailed] = useState(false);
@@ -27,13 +29,31 @@ const SignInForm = () => {
     }, [email, password]);
 
     return (
-        <div>
+        <div className="w-full max-w-xs shadow-md rounded px-8 pt-6 pb-8 mb-4 bg-white border-y-recipe-orange">
             <form onSubmit={handleLogin}>
-                <input className="block text-slate-950 text-lg font-bold mb-2" placeholder="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-                <input className="block text-slate-950 text-lg font-bold mb-2" placeholder="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                <div className="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                        Email
+                    </label>
+                    <input className="block text-gray-700 text-lg mb-4 appearance-none border-b border-slate-950 hover:border-recipe-orange focus:border-recipe-orange w-full focus:outline-none" placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                </div>
+                <div className="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                        Password
+                    </label>
+                    <input className="block text-gray-700 text-lg mb-4 appearance-none border-b border-slate-950 hover:border-recipe-orange focus:border-recipe-orange w-full focus:outline-none" type="password" placeholder="******************" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    {failed && <p class="text-purple-500 text-xs italic">{errorMessage}</p>}
+                    
+                </div>
+                <div className="flex items-center justify-between">
                 <button className="my-5 bg-transparent hover:bg-recipe-orange text-recipe-orange font-semibold hover:text-recipe-tan py-2 px-4 border border-recipe-orange hover:border-transparent rounded" onClick={handleLogin}>Login</button>
+                
+                </div>
+                <div className="flex items-left justify-between">
+                    <h3 className="text-gray-700">don't have an account?</h3>
+                    <Link href="/sign-up" className="underline text-recipe-orange">sign up now</Link>
+                </div>
             </form>
-            {failed && <h1 className="text-slate-950">{errorMessage}</h1>}
         </div>
     )
 };
