@@ -15,7 +15,12 @@ const SignInForm = () => {
 
     const handleLogin = async (event) => {
         event.preventDefault();
-        const {error} = await signIn(email, password);
+        const errorRes = await signIn(email, password);
+
+        if (!errorRes) return;
+
+        const  { error } = errorRes;
+        
         if (error) {
             console.error({error})
             setErrorMessage(error)
