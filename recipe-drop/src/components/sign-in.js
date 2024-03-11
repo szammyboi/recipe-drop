@@ -20,13 +20,13 @@ const SignInForm = () => {
         if (!errorRes) return;
 
         const  { error } = errorRes;
-        
+
         if (error) {
             console.error({error})
             setErrorMessage(error)
             setFailed(true);
         }
-    };  
+    };
 
     useEffect(() => {
         setErrorMessage('');
@@ -43,19 +43,19 @@ const SignInForm = () => {
                     <label className="block text-gray-700 text-sm font-bold mb-2">
                         Email
                     </label>
-                    <input className="block text-gray-700 text-lg mb-4 appearance-none border-b border-slate-950 hover:border-recipe-orange focus:border-recipe-orange w-full focus:outline-none" placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                    <input className="block text-gray-700 text-lg mb-4 appearance-none border-b border-slate-950 hover:border-recipe-orange focus:border-recipe-orange w-full focus:outline-none rounded-none" placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                 </div>
                 <div className="mb-6">
                     <label className="block text-gray-700 text-sm font-bold mb-2">
                         Password
                     </label>
-                    <input className="block text-gray-700 text-lg mb-4 appearance-none border-b border-slate-950 hover:border-recipe-orange focus:border-recipe-orange w-full focus:outline-none" type="password" placeholder="******************" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    <input className="block text-gray-700 text-lg mb-4 appearance-none border-b border-slate-950 hover:border-recipe-orange focus:border-recipe-orange w-full focus:outline-none rounded-none" type="password" placeholder="******************" value={password} onChange={(e) => setPassword(e.target.value)}/>
                     {failed && <p class="text-purple-500 text-xs italic">{errorMessage}</p>}
-                    
+
                 </div>
                 <div className="flex items-center justify-between">
                 <button className="my-5 bg-transparent hover:bg-recipe-orange text-recipe-orange font-semibold hover:text-recipe-tan py-2 px-4 border border-recipe-orange hover:border-transparent rounded" onClick={handleLogin}>Sign In</button>
-                
+
                 </div>
                 <div className="flex items-left justify-between">
                     <h3 className="text-gray-700">don't have an account?</h3>
