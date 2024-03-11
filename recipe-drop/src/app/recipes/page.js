@@ -51,8 +51,8 @@ const Recipes = async () => {
 
   return ( 
     <div className="bg-recipe-tan h-auto min-h-screen w-screen">
-      <div className="pl-6">
-        <h1 className="text-3xl font-bold text-recipe-orange">MY RECIPES</h1>
+      <div className="px-6 flex justify-between">
+        <h1 className="text-3xl font-bold text-recipe-orange my-auto">MY RECIPES</h1>
         <SignOutButton signOut={signOut}/>
       </div>
       
