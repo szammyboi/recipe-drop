@@ -22,11 +22,11 @@ const ParseTime = (time) => {
   return {hours, minutes};
 }
 
-const RecipeItem = async ({entry}) => {
+const RecipeItem = async ({entry,random}) => {
   let time;
   const { hours, minutes } = ParseTime(entry.steps.cooking_minutes);
 
-  const image_url = "https://static01.nyt.com/images/2024/03/08/multimedia/08BROWN-BREADrex-pglc/13BROWN-BREADrex-pglc-mediumThreeByTwo440.jpg?w=1280&q=75";
+  let image_url = "https://picsum.photos/1280/700?random=" + random ;
 
   if (hours > 0 && minutes == 0)
     time = <h1>{hours} {hours == 1 ? "hour" : "hours"}</h1>
@@ -36,13 +36,17 @@ const RecipeItem = async ({entry}) => {
     time = <h1>{minutes} {minutes == 1 ? "minute" : "minutes"}</h1>
 
   return (
-    <div className="rounded-md border-gray-200 shadow-md overflow-hidden relative">
-        <img src={image_url} className="w-full h-48 object-cover"/>
-        <div className="mx-6 mt-4 h-20 mb-4 flex flex-col justify-evenly">
-          <span className="font-bold">{entry.title}</span>
+    <div className="overflow-hidden relative border-solid border border-recipe-orange p-4">
+        <img src={image_url} className="w-full h-48 object-cover rounded-md"/>
+        
+        <div className="rounded-b-md border-t border-solid border-recipe-orange mt-4 h-28">
+          <div className=" flex flex-col justify-evenly h-full">
+          <span className="font-bold text-recipe-orange text-xl">{entry.title}</span>
           <span className="block text-gray-500 text-sm">{time}</span>
+          </div>
         </div>
     </div>
+
   )
 }
 
@@ -52,15 +56,15 @@ const Recipes = async () => {
 
   return ( 
     <div className="bg-recipe-tan h-auto min-h-screen w-screen">
-      <div className="px-6 flex justify-between">
-        <h1 className="text-3xl font-bold text-recipe-orange my-auto">MY RECIPES</h1>
+      <div className="px-6 flex justify-between py-2">
+        <h1 className="text-4xl font-bold text-recipe-orange my-auto"><i>RECIPE DROP</i></h1>
         <SignOutButton signOut={signOut}/>
       </div>
       
 
-      <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-screen px-6 no-scrollbar">
-        {data && data.recipes.map((entry) => (
-          <RecipeItem entry={entry} key={entry.id}/>
+      <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-screen px-6 mb-6 no-scrollbar">
+        {data && data.recipes.map((entry, index) => (
+          <RecipeItem entry={entry} key={entry.id} random={index}/>
         ))}
       </div>
       
