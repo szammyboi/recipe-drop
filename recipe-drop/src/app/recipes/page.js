@@ -26,21 +26,22 @@ const RecipeItem = async ({entry}) => {
   let time;
   const { hours, minutes } = ParseTime(entry.steps.cooking_minutes);
 
+  const image_url = "https://static01.nyt.com/images/2024/03/08/multimedia/08BROWN-BREADrex-pglc/13BROWN-BREADrex-pglc-mediumThreeByTwo440.jpg?w=1280&q=75";
+
   if (hours > 0 && minutes == 0)
-    time = <h1>{hours} {hours == 1 ? "hr" : "hrs"}</h1>
+    time = <h1>{hours} {hours == 1 ? "hour" : "hours"}</h1>
   else if (hours > 0 && minutes > 0)
-    time = <h1>{hours} {hours == 1 ? "hr" : "hrs"} & {minutes} {minutes == 1 ? "min" : "mins"}</h1>
+    time = <h1>{hours} {hours == 1 ? "hour" : "hours"} {minutes} {minutes == 1 ? "minute" : "minutes"}</h1>
   else if (hours == 0 && minutes > 0)
-    time = <h1>{minutes} {minutes == 1 ? "min" : "mins"}</h1>
+    time = <h1>{minutes} {minutes == 1 ? "minute" : "minutes"}</h1>
 
   return (
-    <div className="text-slate-950 shadow-md rounded px-8 pt-6 pb-8 mb-4 bg-white border-y-recipe-orange">
-      {entry.title}
-      <div className="flex">
-        <h1 className="text-recipe-orange pr-2">Total time:</h1>
-        {time}
-      </div>
-      
+    <div className="rounded-md border-gray-200 shadow-md overflow-hidden relative">
+        <img src={image_url} className="w-full h-48 object-cover"/>
+        <div className="mx-6 mt-4 h-20 mb-4 flex flex-col justify-evenly">
+          <span className="font-bold">{entry.title}</span>
+          <span className="block text-gray-500 text-sm">{time}</span>
+        </div>
     </div>
   )
 }
@@ -79,3 +80,19 @@ export default withAuthGuard(Recipes);
             </div>
         ))}
 */
+
+/*
+
+<div className="shadow-md rounded mb-4 p-1 bg-white border-y-recipe-orange h-80 flex-grow-0 overflow-clip">
+      <div className="w-auto overflow-clip h-45">
+       <img src={image_url} className="object-cover w-full"/>
+      </div>
+      
+      <div className="text-slate-950 bg-recipe-orange flex-grow">
+        <strong>{entry.title}</strong>
+        {time}
+      </div>
+      
+    </div>
+
+    */
