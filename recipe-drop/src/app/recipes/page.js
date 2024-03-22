@@ -62,7 +62,7 @@ const Recipes = async () => {
       </div>
       
 
-      <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-screen px-6 mb-6 no-scrollbar">
+      <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-screen px-6 pb-6 no-scrollbar">
         {data && data.recipes.map((entry, index) => (
           <RecipeItem entry={entry} key={entry.id} random={index}/>
         ))}
