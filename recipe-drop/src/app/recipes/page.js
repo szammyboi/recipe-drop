@@ -10,7 +10,7 @@ const getRecipes = `
     recipes {
       id,
       title,
-      steps
+      details
     }
   }
 `;
@@ -24,7 +24,7 @@ const ParseTime = (time) => {
 
 const RecipeItem = async ({entry,random}) => {
   let time;
-  const { hours, minutes } = ParseTime(entry.steps.cooking_minutes);
+  const { hours, minutes } = ParseTime(entry.details.cooking_minutes);
 
   let image_url = "https://picsum.photos/1280/700?random=" + random ;
 
