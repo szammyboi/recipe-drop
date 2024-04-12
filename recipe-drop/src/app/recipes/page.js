@@ -38,7 +38,11 @@ const RecipeItem = async ({auth, entry,image}) => {
 
   return (
     <div className="overflow-hidden relative border-solid border border-recipe-orange p-4">
-        <img src={image_url} className="w-full h-48 object-cover rounded-md"/>
+        {image != null ?
+           <img src={image_url} className="w-full h-48 object-cover rounded-md"/>
+           :
+           <div className="w-full h-48 rounded-md bg-recipe-orange"/>
+        }
         
         <div className="rounded-b-md border-t border-solid border-recipe-orange mt-4 h-28">
           <div className=" flex flex-col justify-evenly h-full">
