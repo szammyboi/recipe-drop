@@ -10,7 +10,8 @@ const getRecipes = `
     recipes {
       id,
       title,
-      details
+      details,
+      image
     }
   }
 `;
@@ -22,11 +23,11 @@ const ParseTime = (time) => {
   return {hours, minutes};
 }
 
-const RecipeItem = async ({entry,random}) => {
+const RecipeItem = async ({auth, entry,image}) => {
   let time;
   const { hours, minutes } = ParseTime(entry.details.cooking_minutes);
 
-  let image_url = "https://picsum.photos/1280/700?random=" + random ;
+  let image_url = auth.storage.getPublicUrl({fileId: image});
 
   if (hours > 0 && minutes == 0)
     time = <h1>{hours} {hours == 1 ? "hour" : "hours"}</h1>
@@ -63,8 +64,8 @@ const Recipes = async () => {
       
 
       <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-screen px-6 pb-6 no-scrollbar">
-        {data && data.recipes.map((entry, index) => (
-          <RecipeItem entry={entry} key={entry.id} random={index}/>
+        {data && data.recipes.map((entry) => (
+          <RecipeItem auth={auth} entry={entry} key={entry.id} image={entry.image}/>
         ))}
       </div>
       
