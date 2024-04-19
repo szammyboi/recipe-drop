@@ -2,6 +2,7 @@
 
 import "@/app/globals.css";
 
+// Define sign out button to handle signing out. 
 const SignOutButton = ({signOut}) => {
     return (
         <button 
