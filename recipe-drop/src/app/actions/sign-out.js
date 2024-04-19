@@ -7,9 +7,11 @@ import { NHOST_SESSION_KEY, getAuthClient } from "@/utils/nhost";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
+// Sign out of website. 
 export const signOut = async () => {
     const nhost = await getAuthClient();
 
+    // Sign out of nhost session, delete the session key, and redirect to sign in page. 
     await nhost.auth.signOut();
     cookies().delete(NHOST_SESSION_KEY);
 
