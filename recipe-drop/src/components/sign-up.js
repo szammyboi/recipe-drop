@@ -5,18 +5,24 @@ import "@/app/globals.css";
 import { signUp } from "@/app/actions/sign-up";
 import { useState, useEffect } from "react";
 
+// Define sign up form. 
 const SignUpForm = () => {
     const [failed, setFailed] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    // Process signup requests.
     const handleSignUp = async (event) => {
         event.preventDefault();
+
+        // Attempt to sign up. 
         const errorRes = await signUp(email, password);
 
+        // If sign up succeeds, end. 
         if (!errorRes) return;
 
+        // Otherwise, notify console of sign up failure. 
         const  { error } = errorRes;
         
         if (error) {
@@ -31,6 +37,7 @@ const SignUpForm = () => {
         setFailed(false);
     }, [email, password]);
 
+    // Define structure and design of sign up box with email and password, capable of processing sign up requests. 
     return (
         <div className="w-full max-w-xs shadow-md rounded px-8 pt-6 pb-8 mb-4 bg-white border-y-recipe-orange">
             <form onSubmit={handleSignUp}>
