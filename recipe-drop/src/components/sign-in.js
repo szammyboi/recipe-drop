@@ -6,19 +6,24 @@ import { signIn } from "@/app/actions/sign-in";
 import { useEffect, useState } from "react";
 import Link from 'next/link';
 
-
+// Define sign in form.
 const SignInForm = () => {
     const [failed, setFailed] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    // Process login request.
     const handleLogin = async (event) => {
         event.preventDefault();
+
+        // Wait for result of sign in attempt. 
         const errorRes = await signIn(email, password);
 
+        // If successful, return. 
         if (!errorRes) return;
 
+        // Otherwise, change relevant values to error state, logging error in console. 
         const  { error } = errorRes;
 
         if (error) {
@@ -33,6 +38,7 @@ const SignInForm = () => {
         setFailed(false);
     }, [email, password]);
 
+    // Define sign in page component, receiving an email and a password, with a button to click for sign in attempts. Also allow users to click "sign up now" if they do not have an account. 
     return (
         <div className="w-full max-w-xs shadow-md rounded px-8 pt-6 pb-8 mb-4 bg-white border-y-recipe-orange">
             <form onSubmit={handleLogin}>
