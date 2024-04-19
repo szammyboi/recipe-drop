@@ -1,9 +1,11 @@
 import SignOutButton from "@/components/sign-out";
 import withAuthGuard from "@/utils/guard";
 import { signOut } from "@/app/actions/sign-out";
+import ViewRecipeRedirectButton from "@/components/view-redirect";
 
 import "@/app/globals.css";
 import { getAuthClient } from "@/utils/nhost";
+
 
 const getRecipes = `
   {
@@ -14,6 +16,7 @@ const getRecipes = `
     }
   }
 `;
+
 
 const ParseTime = (time) => {
   const hours =  Math.floor(time / 60);
@@ -27,6 +30,7 @@ const RecipeItem = async ({entry,random}) => {
   const { hours, minutes } = ParseTime(entry.details.cooking_minutes);
 
   let image_url = "https://picsum.photos/1280/700?random=" + random ;
+
 
   if (hours > 0 && minutes == 0)
     time = <h1>{hours} {hours == 1 ? "hour" : "hours"}</h1>
@@ -43,6 +47,9 @@ const RecipeItem = async ({entry,random}) => {
           <div className=" flex flex-col justify-evenly h-full">
           <span className="font-bold text-recipe-orange text-xl">{entry.title}</span>
           <span className="block text-gray-500 text-sm">{time}</span>
+          <div className="flex items-center justify-between">
+          <ViewRecipeRedirectButton uuid={entry.id}/>
+          </div>
           </div>
         </div>
     </div>
