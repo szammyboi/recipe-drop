@@ -2,6 +2,7 @@ import SignInForm from "@/components/sign-in";
 import withAuthAsyncReverse from "@/utils/reverseguard";
 import "@/app/globals.css";
 
+// Define sign in page, with a sign in form component. 
 const SignIn = () => {
 
     return (

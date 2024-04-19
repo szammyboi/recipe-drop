@@ -2,6 +2,7 @@ import SignUpForm from "@/components/sign-up";
 import withAuthAsyncReverse from "@/utils/reverseguard";
 import "@/app/globals.css";
 
+// Define sign up page, with a sign up form component centered on the screen. 
 const SignUp = () => {
 
     return (
