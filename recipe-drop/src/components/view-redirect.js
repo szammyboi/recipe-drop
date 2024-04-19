@@ -1,7 +1,6 @@
 'use client';
 
 import "@/app/globals.css";
-import { RECIPE_VIEW_URL } from "@/routes";
 import { useRouter } from "next/navigation";
 
 // Define view recipe button on recipe cards.
