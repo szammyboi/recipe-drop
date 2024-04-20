@@ -11,7 +11,7 @@ const ParseTime = (time) => {
   }
 
 // Define button to open modal. 
-export const ViewRecipeButton = ( entry, image_url ) => {
+export const ViewRecipeModal = ( entry, imageI ) => {
 
     const [ isOpen, setIsOpen ] = useState(false);
 
@@ -48,7 +48,6 @@ export const ViewRecipeButton = ( entry, image_url ) => {
         }
     };
     
-    console.log("image url: ", image_url);
 
     // Format steps.
     let stepOutput;
@@ -78,19 +77,17 @@ export const ViewRecipeButton = ( entry, image_url ) => {
             <Modal isOpen={isOpen} onRequestClose={() => setIsOpen(false)} style={customStyling}>
                 <div className="overflow-hidden relative border-solid border border-recipe-orange p-4">
                     <div className="w-full text-left text-2xl py-3 font-bold text-recipe-orange">{viewEntry.title}</div>
-                    <div className="w-full text-left text-xl font-bold py-2 text-recipe-orange"><i>Preparation Time: </i></div>
-                    <h1 className="w-full text-left text-l py-1">{time}</h1>
-
-                    {viewEntry.image != null ?
+                    {/*viewEntry.image != null ?
                         <img src={image_url} className="w-48 rounded-md"/>
                         :
                         <div className="w-full h-48 rounded-md bg-recipe-orange"/>
-                    }
-
-                    <div className="w-full text-left text-xl font-bold py-2 text-recipe-orange"><i>Steps: </i></div>
-                    <div className="w-full text-left text-l py-1">{stepOutput}</div>
+                    */}
+                    <div className="w-full text-left text-xl font-bold py-2 text-recipe-orange"><i>Preparation Time: </i></div>
+                    <h1 className="w-full text-left text-l py-1">{time}</h1>
                     <div className="w-full text-left text-xl font-bold py-2 text-recipe-orange"><i>Ingredients: </i></div>
                     <div className="w-full text-left text-l py-1">{ingredientOutput}</div>
+                    <div className="w-full text-left text-xl font-bold py-2 text-recipe-orange"><i>Steps: </i></div>
+                    <div className="w-full text-left text-l py-1">{stepOutput}</div>
                 </div>
                 <button className="my-5 bg-transparent hover:bg-recipe-orange text-recipe-orange font-semibold hover:text-recipe-tan py-2 px-4 border border-recipe-orange hover:border-transparent rounded" 
                     onClick={() => setIsOpen(false)} style={{position: 'absolute', bottom: '20px', left: '20px'}}>
@@ -101,4 +98,4 @@ export const ViewRecipeButton = ( entry, image_url ) => {
     )
 }
 
-export default ViewRecipeButton;
+export default ViewRecipeModal;

@@ -2,7 +2,7 @@ import SignOutButton from "@/components/sign-out";
 import withAuthGuard from "@/utils/guard";
 import { signOut } from "@/app/actions/sign-out";
 import { AddRecipeButton, AddRecipeCard }from "@/components/add-button";
-import ViewRecipeButton from "@/components/view-recipe-button";
+import { ViewRecipeModal } from "@/components/view-recipe-modal";
 
 import "@/app/globals.css";
 import { getAuthClient } from "@/utils/nhost";
@@ -22,7 +22,6 @@ const RecipeItem = async ({auth, entry, image}) => {
   const { hours, minutes } = ParseTime(entry.details.cooking_minutes);
 
   let image_url = auth.storage.getPublicUrl({fileId: image});
-
 
   if (hours > 0 && minutes == 0)
     time = <h1>{hours} {hours == 1 ? "hour" : "hours"}</h1>
@@ -54,7 +53,6 @@ const Recipes = async () => {
   const auth = await getAuthClient();
 
   const { recipes, _ } = await GetRecipes();
-  console.log("recipes:", recipes);
 
   return ( 
     <div className="bg-recipe-tan h-auto min-h-screen w-screen">
@@ -84,7 +82,7 @@ const Recipes = async () => {
             <Link href={"edit/" + entry.id} key={entry.id}>
               <RecipeItem auth={auth} entry={entry} key={entry.id} image={entry.image}/>
             </Link>
-            <ViewRecipeButton entry={entry} image_url={auth.storage.getPublicUrl({fileId: entry.image})}/>
+            <ViewRecipeModal entry={entry} />
           </div>
         ))}
       </div>
