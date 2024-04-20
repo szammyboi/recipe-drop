@@ -57,9 +57,6 @@ const Recipes = async () => {
     <div className="bg-recipe-tan h-auto min-h-screen w-screen">
       <div className="px-6 flex justify-between py-2">
         <h1 className="text-4xl font-bold text-recipe-orange my-auto"><i>RECIPE DROP</i></h1>
-          <div className="px-6 py-4">
-            <h1 className="text-xl text-recipe-orange"><i>Click a recipe to edit.</i></h1>
-          </div>
         <div>
           <div className="hidden sm:inline">
             <AddRecipeButton />
