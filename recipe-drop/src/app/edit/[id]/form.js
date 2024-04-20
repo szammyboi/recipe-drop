@@ -48,18 +48,12 @@ const ImageUpload = ({initial, imageCallback}) => {
     
     return (
         <div className="w-full relative p-2 border-2 border-recipe-orange border-dashed cursor-pointer" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
-            <label  htmlFor="dropzone-file" className={"flex flex-col items-center justify-center cursor-pointer" + ((hovered && image_url == null) ?  " bg-recipe-orange " : " bg-recipe-tan ") +  "w-full aspect-square"} style={{transition: "background-color 0.15s ease-in-out"}}>
-                {image_url ? <ImagePreview image_url={image_url}/> : <UploadSVG hovered={hovered} />}
+            <label  htmlFor="dropzone-file" className={"flex flex-col items-center justify-center cursor-pointer" + (hovered ?  " bg-recipe-orange " : " bg-recipe-tan ") +  "w-full aspect-square"} style={{transition: "background-color 0.15s ease-in-out"}}>
+                {(image_url && !hovered) ? <ImagePreview image_url={image_url}/> : <UploadSVG hovered={hovered} />}
                 <input id="dropzone-file" type="file" className="hidden" accept="image/*" onChange={onUpload} />
             </label>
         </div>
     )
-}
-
-function getMonthName(monthNumber) {
-    const date = new Date()
-    date.setMonth(monthNumber) // starts with 0, so 0 is January
-    return date.toLocaleString('en-EN', { month: "long" })
 }
 
 const CustomTextEntry = ({initial, placeholder, textCallback, color, styling}) => {
@@ -86,7 +80,7 @@ const CustomTextEntry = ({initial, placeholder, textCallback, color, styling}) =
 
     return (
         <div
-            className={"select-text outline-none w-full h-max text-4xl py-2 font-bold relative ml-0 "
+            className={"select-text outline-none w-full h-max py-2 font-bold relative ml-0 "
             + (text != placeholder ? " " + color + " " : " text-slate-400 ") + styling}
             contentEditable="true"
             suppressContentEditableWarning={true}
@@ -114,16 +108,13 @@ const CustomNumberEntry = ({initial, numberCallback}) => {
     }, [hours, minutes]);
     
     return (
-        <div className="w-full h-fit ml-0  flex flex-col items-center justify-center text-xl text-slate-700">
+        <div className="w-full h-fit ml-0 flex flex-col items-center justify-center text-xl text-slate-700">
             <div>
-                <div className={"inline  w-fit"}>
-                    Total time: 
-                </div>
-                <input value={hours} onChange={(e) => setHours(e.target.value)} className="h-fit inline w-12 text-center text-gray-700 text-lg mb-4 mx-1 appearance-none border-b border-slate-950 hover:border-recipe-orange focus:border-recipe-orange focus:outline-none rounded-none bg-recipe-tan" placeholder="0" type="number"/>
+                <input value={hours} onChange={(e) => setHours(e.target.value)} className="h-fit inline w-12 text-center text-gray-700 text-xl mb-4 mx-1 appearance-none border-b border-slate-950 hover:border-recipe-orange focus:border-recipe-orange focus:outline-none rounded-none bg-recipe-tan" placeholder="0" type="number"/>
                 <div className="inline  w-fit">
                     {hours == 1 ? "hour" : "hours"}
                 </div>
-                <input value={minutes} onChange={(e) => setMinutes(e.target.value)} className="h-fit inline w-12 text-center text-gray-700 text-lg mb-4 mx-1 border-b border-slate-950 hover:border-recipe-orange focus:border-recipe-orange focus:outline-none rounded-none bg-recipe-tan appearance-none" placeholder="0" type="number"/>
+                <input value={minutes} onChange={(e) => setMinutes(e.target.value)} className="h-fit inline w-12 text-center text-gray-700 text-xl mb-4 mx-1 border-b border-slate-950 hover:border-recipe-orange focus:border-recipe-orange focus:outline-none rounded-none bg-recipe-tan appearance-none" placeholder="0" type="number"/>
                 <div className="inline  w-fit">
                     {minutes == 1 ? "minute" : "minutes"}
                 </div>
@@ -180,17 +171,23 @@ const RecipeCreationForm = ({recipeID, accessToken, initialRecipe}) => {
     ClientSideNhost.storage.setAccessToken(accessToken);
     
     const Save = async () => {
-        EditRecipeTitle(recipeID, title);
+        await EditRecipeTitle(recipeID, title);
 
         initialRecipe.details.updated_at = JSON.stringify(new Date());
         initialRecipe.details.cooking_minutes = totalTime;
         initialRecipe.details.steps = steps;
         initialRecipe.details.ingredients = ingredients;
-        EditRecipeDetails(recipeID, initialRecipe.details);
+        await EditRecipeDetails(recipeID, initialRecipe.details);
         setDate(new Date());
-    }
 
-    const Delete = async () => {
+        router.push("/view/" + recipeID);
+    }
+    
+    const Cancel = () => {
+        router.push("/view/" + recipeID);
+    };
+
+    const Delete = () => {
         DeleteRecipe(recipeID);
         router.push("/recipes");
     };
@@ -222,17 +219,23 @@ const RecipeCreationForm = ({recipeID, accessToken, initialRecipe}) => {
                 <ImageUpload initial={initialRecipe.image ? initialRecipe.image_url : null} imageCallback={setImageID}/>
             </div>
             <div className="col-span-1 sm:col-span-2 w-full flex flex-col items-center justify-center mt-5 sm:mt-0">
-                <CustomTextEntry styling="text-center" color="text-recipe-orange" initial={initialRecipe.title} placeholder={"Untitled Recipe"} textCallback={setTitle} />
+                <CustomTextEntry styling="text-center text-5xl" color="text-recipe-orange" initial={initialRecipe.title} placeholder={"Untitled Recipe"} textCallback={setTitle} />
                 
                 <CustomNumberEntry initial={totalTime} numberCallback={setTotalTime}/>
             </div>
 
-            <div style={{position: "fixed", left: "0px", bottom: "2vh"}} className="w-full flex flex-row items-center justify-center">
+            <div style={{position: "fixed", left: "0px", bottom: "2vh", zIndex: "5"}} className="w-full flex flex-row items-center justify-center">
                 <button 
                     className="bg-recipe-tan hover:bg-recipe-orange text-recipe-orange font-semibold hover:text-recipe-tan py-2 px-4 border border-recipe-orange hover:border-transparent rounded mx-2"
                     onClick={Save}
                 >
-                    Save
+                    Done
+                </button>
+                <button 
+                    className="bg-recipe-tan hover:bg-recipe-orange text-recipe-orange font-semibold hover:text-recipe-tan py-2 px-4 border border-recipe-orange hover:border-transparent rounded mx-2"
+                    onClick={Cancel}
+                >
+                    Cancel
                 </button>
                 <button 
                     className="bg-recipe-tan hover:bg-recipe-orange text-recipe-orange font-semibold hover:text-recipe-tan py-2 px-4 border border-recipe-orange hover:border-transparent rounded mx-2"

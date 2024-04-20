@@ -74,7 +74,7 @@ const Recipes = async () => {
         </div>
         
         {recipes && recipes.reverse().map((entry) => (
-          <Link href={"edit/" + entry.id} key={entry.id}>
+          <Link href={"/view/" + entry.id} key={entry.id}>
             <RecipeItem auth={auth} entry={entry} key={entry.id} image={entry.image}/>
           </Link>
         ))}

@@ -22,9 +22,9 @@ const EditPage = async ({params}) => {
     }
 
     if (recipe.image) {
-        const resp = await auth.storage.getPresignedUrl({fileId: recipe.image});
-        if (resp.presignedUrl) {
-            recipe.image_url = resp.presignedUrl.url;
+        const url = auth.storage.getPublicUrl({fileId: recipe.image});
+        if (url) {
+            recipe.image_url = url;
         }
     }
 

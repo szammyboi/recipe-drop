@@ -5,7 +5,7 @@ import withAuthGuard from "@/utils/guard";
 import { RedirectType, redirect } from "next/navigation";
 import SignOutButton from "@/components/sign-out";
 import { signOut } from "@/app/actions/sign-out";
-import RecipeCreationForm from "./form";
+import RecipeViewForm from "./form";
 import Link from 'next/link';
 
 
@@ -22,9 +22,9 @@ const EditPage = async ({params}) => {
     }
 
     if (recipe.image) {
-        const resp = await auth.storage.getPresignedUrl({fileId: recipe.image});
-        if (resp.presignedUrl) {
-            recipe.image_url = resp.presignedUrl.url;
+        const url = auth.storage.getPublicUrl({fileId: recipe.image});
+        if (url) {
+            recipe.image_url = url;
         }
     }
 

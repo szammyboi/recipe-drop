@@ -7,7 +7,7 @@ import { NewRecipe } from "@/app/actions/recipes";
 import { PlusSymbol } from "./graphics";
 
 const CreateRecipe = async (router) => {
-    const {id, error} = await NewRecipe("", {}, null);
+    const {id, error} = await NewRecipe("", {update_at: JSON.stringify(new Date())}, null);
 
     if (id)
         router.push("/edit/" + id);
@@ -32,7 +32,9 @@ export const AddRecipeCard= () => {
     return (
         <div className="cursor-pointer overflow-hidden relative border-solid border border-recipe-orange p-4" onClick={() => CreateRecipe(router)}>
             <div className="w-full h-fit rounded-md bg-recipe-tan border-solid border border-recipe-orange flex flex-col items-center justify-center">
-                <PlusSymbol className="text-recipe-orange p-5" width="4.5rem" height="4.5rem"/>
+                <div className="p-5">
+                    <PlusSymbol width="2rem" height="2rem"/>
+                </div>
             </div>
         </div>
     )
