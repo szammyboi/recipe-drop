@@ -17,7 +17,7 @@ const ParseTime = (time) => {
   return {hours, minutes};
 }
 
-const RecipeItem = async ({auth, entry,image}) => {
+const RecipeItem = async ({auth, entry, image}) => {
   let time;
   const { hours, minutes } = ParseTime(entry.details.cooking_minutes);
 
@@ -54,6 +54,7 @@ const Recipes = async () => {
   const auth = await getAuthClient();
 
   const { recipes, _ } = await GetRecipes();
+  console.log("recipes:", recipes);
 
   return ( 
     <div className="bg-recipe-tan h-auto min-h-screen w-screen">
@@ -83,7 +84,7 @@ const Recipes = async () => {
             <Link href={"edit/" + entry.id} key={entry.id}>
               <RecipeItem auth={auth} entry={entry} key={entry.id} image={entry.image}/>
             </Link>
-            <ViewRecipeButton entry={entry}/>
+            <ViewRecipeButton entry={entry} image_url={auth.storage.getPublicUrl({fileId: entry.image})}/>
           </div>
         ))}
       </div>
