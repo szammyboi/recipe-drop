@@ -78,8 +78,8 @@ export const ViewRecipeButton = ( entry, image_url ) => {
             <Modal isOpen={isOpen} onRequestClose={() => setIsOpen(false)} style={customStyling}>
                 <div className="overflow-hidden relative border-solid border border-recipe-orange p-4">
                     <div className="w-full text-left text-2xl py-3 font-bold text-recipe-orange">{viewEntry.title}</div>
-                    <div className="w-full text-left text-xl font-bold py-2 text-recipe-orange">Preparation Time: </div>
-                    <h1 className="w-full text-left text-xl py-1 text-recipe-orange">{time}</h1>
+                    <div className="w-full text-left text-xl font-bold py-2 text-recipe-orange"><i>Preparation Time: </i></div>
+                    <h1 className="w-full text-left text-l py-1">{time}</h1>
 
                     {viewEntry.image != null ?
                         <img src={image_url} className="w-48 rounded-md"/>
@@ -87,8 +87,10 @@ export const ViewRecipeButton = ( entry, image_url ) => {
                         <div className="w-full h-48 rounded-md bg-recipe-orange"/>
                     }
 
-                    <p>Steps: {stepOutput}</p>
-                    <p>Ingredients: {ingredientOutput}</p>
+                    <div className="w-full text-left text-xl font-bold py-2 text-recipe-orange"><i>Steps: </i></div>
+                    <div className="w-full text-left text-l py-1">{stepOutput}</div>
+                    <div className="w-full text-left text-xl font-bold py-2 text-recipe-orange"><i>Ingredients: </i></div>
+                    <div className="w-full text-left text-l py-1">{ingredientOutput}</div>
                 </div>
                 <button className="my-5 bg-transparent hover:bg-recipe-orange text-recipe-orange font-semibold hover:text-recipe-tan py-2 px-4 border border-recipe-orange hover:border-transparent rounded" 
                     onClick={() => setIsOpen(false)} style={{position: 'absolute', bottom: '20px', left: '20px'}}>
