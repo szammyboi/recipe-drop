@@ -4,11 +4,11 @@ import "@/app/globals.css";
 import { useRouter } from "next/navigation";
 
 // Define view recipe button on recipe cards.
-const ViewRecipeRedirectButton = (uuid) => {
+const ViewRecipeRedirectButton = ({uuid}) => {
     const router = useRouter();
 
     const handleViewRecipe = () => {
-        router.push(`/recipe-view/?query=${uuid}`)
+        router.push(`/${String(uuid)}`)
     };
 
     // Define button component, and route to recipe view URL on click. 
