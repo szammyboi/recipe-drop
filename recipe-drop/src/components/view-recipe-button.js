@@ -3,8 +3,16 @@
 import Modal from 'react-modal';
 import React, { useState } from 'react';
 
-export const ViewRecipeButton = () => {
+export const ViewRecipeButton = (entry) => {
     const [ isOpen, setIsOpen ] = useState(false);
+
+    const handleOpenClick = () => {
+        setIsOpen(true);
+    }
+
+    const handleCloseClick = () => {
+        setIsOpen(false);
+    }
 
     const customStyling = {
         overlay: {
@@ -21,13 +29,19 @@ export const ViewRecipeButton = () => {
     }
 
     return (
-        <button className="my-5 bg-transparent hover:bg-recipe-orange text-recipe-orange font-semibold hover:text-recipe-tan py-2 px-4 border border-recipe-orange hover:border-transparent rounded"
-        onClick = {() => setIsOpen(true)}>
+        <div>
+            <button className="my-5 bg-transparent hover:bg-recipe-orange text-recipe-orange font-semibold hover:text-recipe-tan py-2 px-4 border border-recipe-orange hover:border-transparent rounded"
+            onClick = {() => setIsOpen(true)}>
+                View Recipe
+            </button>
             <Modal isOpen={isOpen} onRequestClose={() => setIsOpen(false)} style={customStyling}>
                 Recipe Info!
+                <button className="my-5 bg-transparent hover:bg-recipe-orange text-recipe-orange font-semibold hover:text-recipe-tan py-2 px-4 border border-recipe-orange hover:border-transparent rounded" 
+                onClick={handleCloseClick}>
+                    Close Recipe
+                </button>
             </Modal>
-            View Recipe
-        </button>
+        </div>
     )
 }
 

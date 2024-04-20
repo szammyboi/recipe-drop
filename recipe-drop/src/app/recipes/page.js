@@ -23,6 +23,7 @@ const RecipeItem = async ({auth, entry,image}) => {
 
   let image_url = auth.storage.getPublicUrl({fileId: image});
 
+
   if (hours > 0 && minutes == 0)
     time = <h1>{hours} {hours == 1 ? "hour" : "hours"}</h1>
   else if (hours > 0 && minutes > 0)
@@ -42,7 +43,6 @@ const RecipeItem = async ({auth, entry,image}) => {
           <div className=" flex flex-col justify-evenly h-full">
           <span className="font-bold text-recipe-orange text-xl">{entry.title == "" ? "Untitled Recipe" : entry.title}</span>
           <span className="block text-gray-500 text-sm">{time}</span>
-          <ViewRecipeButton />
           </div>
         </div>
     </div>
@@ -79,9 +79,12 @@ const Recipes = async () => {
         </div>
         
         {recipes && recipes.reverse().map((entry) => (
-          <Link href={"edit/" + entry.id} key={entry.id}>
-            <RecipeItem auth={auth} entry={entry} key={entry.id} image={entry.image}/>
-          </Link>
+          <div>
+            <Link href={"edit/" + entry.id} key={entry.id}>
+              <RecipeItem auth={auth} entry={entry} key={entry.id} image={entry.image}/>
+            </Link>
+            <ViewRecipeButton entry={entry}/>
+          </div>
         ))}
       </div>
       
