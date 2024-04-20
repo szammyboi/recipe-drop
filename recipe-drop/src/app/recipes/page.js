@@ -2,6 +2,7 @@ import SignOutButton from "@/components/sign-out";
 import withAuthGuard from "@/utils/guard";
 import { signOut } from "@/app/actions/sign-out";
 import { AddRecipeButton, AddRecipeCard }from "@/components/add-button";
+import ViewRecipeButton from "@/components/view-recipe-button";
 
 import "@/app/globals.css";
 import { getAuthClient } from "@/utils/nhost";
@@ -41,6 +42,7 @@ const RecipeItem = async ({auth, entry,image}) => {
           <div className=" flex flex-col justify-evenly h-full">
           <span className="font-bold text-recipe-orange text-xl">{entry.title == "" ? "Untitled Recipe" : entry.title}</span>
           <span className="block text-gray-500 text-sm">{time}</span>
+          <ViewRecipeButton />
           </div>
         </div>
     </div>
