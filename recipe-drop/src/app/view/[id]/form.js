@@ -1,12 +1,11 @@
 'use client';
 
 import "@/app/globals.css";
-import { useEffect, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 
 import ClientSideNhost from "@/utils/client-nhost";
 import { DeleteRecipe, EditRecipe, EditRecipeDetails, EditRecipeImage, EditRecipeTitle } from "@/app/actions/recipes";
 import { useRouter } from "next/navigation";
-import { PlusSymbol } from "@/components/graphics";
 
 const UploadSVG = ({hovered}) => {
     return (
@@ -62,75 +61,6 @@ function getMonthName(monthNumber) {
     return date.toLocaleString('en-EN', { month: "long" })
 }
 
-const CustomTextEntry = ({initial, placeholder, textCallback, color, styling}) => {
-    const [text, setText] = useState(initial ? initial : placeholder);
-
-    const onFocus = (e) => {
-        if (e.target.textContent == placeholder)
-            e.target.textContent = "";
-        setText(e.target.textContent);
-        textCallback(e.target.textContent);
-    };
-
-    const onBlur = (e) => {
-        if (e.target.textContent == "")
-            e.target.textContent = placeholder;
-        setText(e.target.textContent);
-        textCallback(e.target.textContent);
-    }
-
-    const onInput = (e) => {
-        if (e.nativeEvent.data == '\n')
-            e.preventDefault();
-    }
-
-    return (
-        <div
-            className={"select-text outline-none w-full h-max text-4xl py-2 font-bold relative ml-0 "
-            + (text != placeholder ? " " + color + " " : " text-slate-400 ") + styling}
-            contentEditable="true"
-            suppressContentEditableWarning={true}
-            onFocus={onFocus}
-            onTouchStart={onFocus}
-            onBlur={onBlur}
-            onTouchCancel={onBlur}
-            onTouchMove={onBlur} 
-            onBeforeInput={onInput}
-        >
-            {initial ? initial : placeholder}
-        </div>
-    )
-}
-
-const CustomNumberEntry = ({initial, numberCallback}) => {
-    const [hours, setHours] = useState(Math.floor(initial / 60));
-    const [minutes, setMinutes] = useState(initial % 60);
-
-    useEffect(() => {
-        if (hours != null || minutes != null) {
-            const totalTime = (Number(hours) ? Number(hours) : 0) * 60 + (Number(minutes) ? Number(minutes) : 0);
-            numberCallback(totalTime);
-        }
-    }, [hours, minutes]);
-    
-    return (
-        <div className="w-full h-fit ml-0  flex flex-col items-center justify-center text-xl text-slate-700">
-            <div>
-                <div className={"inline  w-fit"}>
-                    Total time: 
-                </div>
-                <input value={hours} onChange={(e) => setHours(e.target.value)} className="h-fit inline w-12 text-center text-gray-700 text-lg mb-4 mx-1 appearance-none border-b border-slate-950 hover:border-recipe-orange focus:border-recipe-orange focus:outline-none rounded-none bg-recipe-tan" placeholder="0" type="number"/>
-                <div className="inline  w-fit">
-                    {hours == 1 ? "hour" : "hours"}
-                </div>
-                <input value={minutes} onChange={(e) => setMinutes(e.target.value)} className="h-fit inline w-12 text-center text-gray-700 text-lg mb-4 mx-1 border-b border-slate-950 hover:border-recipe-orange focus:border-recipe-orange focus:outline-none rounded-none bg-recipe-tan appearance-none" placeholder="0" type="number"/>
-                <div className="inline  w-fit">
-                    {minutes == 1 ? "minute" : "minutes"}
-                </div>
-            </div>
-        </div>
-    )
-}
 
 const Step = ({step, steps, setSteps, index}) => {
     const UpdateText = (updatedText) => {
@@ -167,7 +97,7 @@ const Ingredient = ({ingredient, ingredients, setIngredients, index}) => {
 
 
 
-const RecipeCreationForm = ({recipeID, accessToken, initialRecipe}) => {
+const RecipeViewForm = ({recipeID, accessToken, initialRecipe}) => {
     const router = useRouter();
     
     const [ingredients, setIngredients] = useState(initialRecipe.details.ingredients ? initialRecipe.details.ingredients : []);
@@ -254,7 +184,7 @@ const RecipeCreationForm = ({recipeID, accessToken, initialRecipe}) => {
                     ))}
                     
                     <div className="py-3 cursor-pointer" onClick={NewIngredient}>
-                        <PlusSymbol width="1rem" height="1rem" />
+                        <PlusSymbol />
                     </div>
                 </div>
                 <div className="col-span-1 sm:col-span-2 px-5 mt-10">
@@ -264,7 +194,7 @@ const RecipeCreationForm = ({recipeID, accessToken, initialRecipe}) => {
                         <Step step={step} index={i} steps={steps} setSteps={setSteps} key={"step" + i}/>
                     ))}
                     <div className="py-3 cursor-pointer" onClick={NewStep}>
-                        <PlusSymbol width="1rem" height="1rem" />
+                        <PlusSymbol />
                     </div>
                 </div>
             </div>
@@ -274,4 +204,9 @@ const RecipeCreationForm = ({recipeID, accessToken, initialRecipe}) => {
     );
 }
 
-export default RecipeCreationForm;
+export default RecipeViewForm;
+
+/*
+for view
+<p className="appearance-none bg-recipe-tan text-center sm:text-left relative ml-0 sm:ml-10 w-full text-2xl font-bold text-slate-400">Updated on {getMonthName(date.getMonth())} {date.getDate()}, {date.getFullYear()} </p>
+*/

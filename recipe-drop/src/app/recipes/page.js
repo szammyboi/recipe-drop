@@ -1,7 +1,7 @@
 import SignOutButton from "@/components/sign-out";
 import withAuthGuard from "@/utils/guard";
 import { signOut } from "@/app/actions/sign-out";
-import AddRecipeButton from "@/components/add-button";
+import { AddRecipeButton, AddRecipeCard }from "@/components/add-button";
 
 import "@/app/globals.css";
 import { getAuthClient } from "@/utils/nhost";
@@ -57,13 +57,24 @@ const Recipes = async () => {
     <div className="bg-recipe-tan h-auto min-h-screen w-screen">
       <div className="px-6 flex justify-between py-2">
         <h1 className="text-4xl font-bold text-recipe-orange my-auto"><i>RECIPE DROP</i></h1>
-        <SignOutButton signOut={signOut}/>
+        <div>
+          <div className="hidden sm:inline">
+            <AddRecipeButton />
+          </div>
+            
+          <SignOutButton signOut={signOut}/>
+        </div>
+        
       </div>
       
-      <AddRecipeButton addRecipe={NewRecipe}/>
+      
       <div className="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-screen px-6 pb-6 no-scrollbar">
+        <div className="inline sm:hidden">
+          <AddRecipeCard />
+        </div>
+        
         {recipes && recipes.reverse().map((entry) => (
-          <Link href={"edit/" + entry.id}>
+          <Link href={"edit/" + entry.id} key={entry.id}>
             <RecipeItem auth={auth} entry={entry} key={entry.id} image={entry.image}/>
           </Link>
         ))}

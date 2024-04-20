@@ -10,6 +10,14 @@ const createRecipeQuery = `
     }
 `;
 
+const deleteRecipe = `
+    mutation($id: uuid!) {
+        delete_recipes_by_pk(id: $id) {
+            id
+        }
+    }
+`
+
 const getRecipes = `
   query {
     recipes {
@@ -120,12 +128,30 @@ export const NewRecipe = async (title, details, image) => {
     }
 };
 
+export const DeleteRecipe = async (id) => {
+    const nhost = await getAuthClient();
+
+    let payload = {id: id};
+    const {data, error} = await nhost.graphql.request(deleteRecipe, payload);
+
+    if (error) {
+        return {
+            id: null,
+            error: error.message
+        }
+    }
+
+    return {
+        id: data.delete_recipes_by_pk.id,
+        error: null
+    }
+};
+
 export const EditRecipe = async (id, title, details, image) => {
     const nhost = await getAuthClient();
 
     const { recipe } = await GetRecipe(id);
 
-    console.log("send this", image)
     let payload = {id: id, title: title, details: details, image: image};
     const {data, error} = await nhost.graphql.request(updateRecipe, payload);
 

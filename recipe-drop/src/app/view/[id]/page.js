@@ -36,7 +36,7 @@ const EditPage = async ({params}) => {
                 </h1>
                 <SignOutButton signOut={signOut}/>
             </div>
-            <RecipeCreationForm recipeID={recipeID} accessToken={accessToken} initialRecipe={recipe}/>
+            <RecipeViewForm recipeID={recipeID} accessToken={accessToken} initialRecipe={recipe}/>
         </div>
         
     )
