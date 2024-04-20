@@ -69,40 +69,39 @@ const RecipeViewForm = async ({recipeID, initialRecipe}) => {
 
     return (
         <div>
-        <div className="px-[10%] pt-[5%] h-auto w-screen grid grid-cols-1 sm:grid-cols-3">
-            <div className="flex flex-cols items-center justify-center w-full ">
-                <ImagePreview image_url={initialRecipe.image_url} />
-            </div>
-            <div className="col-span-1 sm:col-span-2 w-full flex flex-col items-center justify-center mt-5 sm:mt-0">
-                <h1 className="text-recipe-orange select-text outline-none w-full h-max text-5xl py-2 font-bold relative text-center">{initialRecipe.title}</h1>
-                
-                <div className="bg-recipe-tan text-center relative ml-0 w-full text-2xl text-slate-950">{time}</div>
-                <p className="bg-recipe-tan text-center relative ml-0 w-full text-md text-slate-500">Updated on {getMonthName(date.getMonth())} {date.getDate()}, {date.getFullYear()} </p>
-                
-                <Link href={"/edit/" + recipeID}><p className="bg-recipe-tan text-center relative ml-0 w-full text-md text-recipe-orange underline">edit</p></Link>
-            </div>
-            
-        </div>
-        <div className="px-[6%] h-screen w-screen">
-            <div className="grid grid-cols-1 sm:grid-cols-3">
-                <div className="col-span-1 px-5 mt-10">
-                    <hr className="border-recipe-orange" />
-                    <h1 className="w-full text-left text-2xl py-3 font-bold text-recipe-orange">INGREDIENTS:</h1>
+            <div className="px-[10%] pt-[5%] h-auto w-screen grid grid-cols-1 sm:grid-cols-3">
+                <div className="flex flex-cols items-center justify-center w-full ">
+                    <ImagePreview image_url={initialRecipe.image_url} />
+                </div>
+                <div className="col-span-1 sm:col-span-2 w-full flex flex-col items-center justify-center mt-5 sm:mt-0">
+                    <h1 className="text-recipe-orange select-text outline-none w-full h-max text-5xl py-2 font-bold relative text-center">{initialRecipe.title}</h1>
                     
-                    {ingredients.map((ingredient, i) => (
-                        <Ingredient ingredient={ingredient} key={"ingredient" + i}/>
-                    ))}
+                    <div className="bg-recipe-tan text-center relative ml-0 w-full text-2xl text-slate-950">{time}</div>
+                    <p className="bg-recipe-tan text-center relative ml-0 w-full text-md text-slate-500">Updated on {getMonthName(date.getMonth())} {date.getDate()}, {date.getFullYear()} </p>
+                    
+                    <Link href={"/edit/" + recipeID}><p className="bg-recipe-tan text-center relative ml-0 w-full text-md text-recipe-orange underline">edit</p></Link>
                 </div>
-                <div className="col-span-1 sm:col-span-2 px-5 mt-10">
-                    <hr className="border-recipe-orange" />
-                    <h1 className="w-full text-left text-2xl py-3 font-bold text-recipe-orange">STEPS:</h1>
-                    {steps.map((step, i) => (
-                        <Step step={step} index={i} key={"step" + i}/>
-                    ))}
+                
+            </div>
+            <div className="px-[6%] h-fit min-h-screen w-screen">
+                <div className="grid grid-cols-1 sm:grid-cols-3 pb-10">
+                    <div className="col-span-1 px-5 mt-10">
+                        <hr className="border-recipe-orange" />
+                        <h1 className="w-full text-left text-2xl py-3 font-bold text-recipe-orange">INGREDIENTS:</h1>
+                        
+                        {ingredients.map((ingredient, i) => (
+                            <Ingredient ingredient={ingredient} key={"ingredient" + i}/>
+                        ))}
+                    </div>
+                    <div className="col-span-1 sm:col-span-2 px-5 mt-10">
+                        <hr className="border-recipe-orange" />
+                        <h1 className="w-full text-left text-2xl py-3 font-bold text-recipe-orange">STEPS:</h1>
+                        {steps.map((step, i) => (
+                            <Step step={step} index={i} key={"step" + i}/>
+                        ))}
+                    </div>
                 </div>
             </div>
-        
-        </div>
         </div>
     );
 }

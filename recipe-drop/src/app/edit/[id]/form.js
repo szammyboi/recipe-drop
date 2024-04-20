@@ -214,65 +214,64 @@ const RecipeCreationForm = ({recipeID, accessToken, initialRecipe}) => {
 
     return (
         <div>
-        <div className="px-[10%] pt-[5%] h-auto w-screen grid grid-cols-1 sm:grid-cols-3">
-            <div className="flex flex-cols items-center justify-center w-full ">
-                <ImageUpload initial={initialRecipe.image ? initialRecipe.image_url : null} imageCallback={setImageID}/>
-            </div>
-            <div className="col-span-1 sm:col-span-2 w-full flex flex-col items-center justify-center mt-5 sm:mt-0">
-                <CustomTextEntry styling="text-center text-5xl" color="text-recipe-orange" initial={initialRecipe.title} placeholder={"Untitled Recipe"} textCallback={setTitle} />
-                
-                <CustomNumberEntry initial={totalTime} numberCallback={setTotalTime}/>
-            </div>
+            <div className="px-[10%] pt-[5%] h-auto w-screen grid grid-cols-1 sm:grid-cols-3">
+                <div className="flex flex-cols items-center justify-center w-full ">
+                    <ImageUpload initial={initialRecipe.image ? initialRecipe.image_url : null} imageCallback={setImageID}/>
+                </div>
+                <div className="col-span-1 sm:col-span-2 w-full flex flex-col items-center justify-center mt-5 sm:mt-0">
+                    <CustomTextEntry styling="text-center text-5xl" color="text-recipe-orange" initial={initialRecipe.title} placeholder={"Untitled Recipe"} textCallback={setTitle} />
+                    
+                    <CustomNumberEntry initial={totalTime} numberCallback={setTotalTime}/>
+                </div>
 
-            <div style={{position: "fixed", left: "0px", bottom: "2vh", zIndex: "5"}} className="w-full flex flex-row items-center justify-center">
-                <button 
-                    className="bg-recipe-tan hover:bg-recipe-orange text-recipe-orange font-semibold hover:text-recipe-tan py-2 px-4 border border-recipe-orange hover:border-transparent rounded mx-2"
-                    onClick={Save}
-                >
-                    Done
-                </button>
-                <button 
-                    className="bg-recipe-tan hover:bg-recipe-orange text-recipe-orange font-semibold hover:text-recipe-tan py-2 px-4 border border-recipe-orange hover:border-transparent rounded mx-2"
-                    onClick={Cancel}
-                >
-                    Cancel
-                </button>
-                <button 
-                    className="bg-recipe-tan hover:bg-recipe-orange text-recipe-orange font-semibold hover:text-recipe-tan py-2 px-4 border border-recipe-orange hover:border-transparent rounded mx-2"
-                    onClick={Delete}
-                >
-                    Delete
-                </button>
+                <div style={{position: "fixed", left: "0px", bottom: "2vh", zIndex: "5"}} className="w-full flex flex-row items-center justify-center">
+                    <button 
+                        className="bg-recipe-tan hover:bg-recipe-orange text-recipe-orange font-semibold hover:text-recipe-tan py-2 px-4 border border-recipe-orange hover:border-transparent rounded mx-2"
+                        onClick={Save}
+                    >
+                        Done
+                    </button>
+                    <button 
+                        className="bg-recipe-tan hover:bg-recipe-orange text-recipe-orange font-semibold hover:text-recipe-tan py-2 px-4 border border-recipe-orange hover:border-transparent rounded mx-2"
+                        onClick={Cancel}
+                    >
+                        Cancel
+                    </button>
+                    <button 
+                        className="bg-recipe-tan hover:bg-recipe-orange text-recipe-orange font-semibold hover:text-recipe-tan py-2 px-4 border border-recipe-orange hover:border-transparent rounded mx-2"
+                        onClick={Delete}
+                    >
+                        Delete
+                    </button>
+                </div>
+                
             </div>
-            
-        </div>
-        <div className="px-[6%] h-screen w-screen">
-            <div className="grid grid-cols-1 sm:grid-cols-3">
-                <div className="col-span-1 px-5 mt-10">
-                    <hr className="border-recipe-orange" />
-                    <h1 className="w-full text-left text-2xl py-3 font-bold text-recipe-orange">INGREDIENTS:</h1>
-                    
-                    {ingredients.map((ingredient, i) => (
-                        <Ingredient ingredient={ingredient} ingredients={ingredients} setIngredients={setIngredients} index={i} key={"ingredient" + i}/>
-                    ))}
-                    
-                    <div className="py-3 cursor-pointer" onClick={NewIngredient}>
-                        <PlusSymbol width="1rem" height="1rem" />
+            <div className="px-[6%] h-fit min-h-screen w-screen">
+                <div className="grid grid-cols-1 sm:grid-cols-3 pb-10">
+                    <div className="col-span-1 px-5 mt-10">
+                        <hr className="border-recipe-orange" />
+                        <h1 className="w-full text-left text-2xl py-3 font-bold text-recipe-orange">INGREDIENTS:</h1>
+                        
+                        {ingredients.map((ingredient, i) => (
+                            <Ingredient ingredient={ingredient} ingredients={ingredients} setIngredients={setIngredients} index={i} key={"ingredient" + i}/>
+                        ))}
+                        
+                        <div className="py-3 cursor-pointer" onClick={NewIngredient}>
+                            <PlusSymbol width="1rem" height="1rem" />
+                        </div>
+                    </div>
+                    <div className="col-span-1 sm:col-span-2 px-5 mt-10">
+                        <hr className="border-recipe-orange" />
+                        <h1 className="w-full text-left text-2xl py-3 font-bold text-recipe-orange">STEPS:</h1>
+                        {steps.map((step, i) => (
+                            <Step step={step} index={i} steps={steps} setSteps={setSteps} key={"step" + i}/>
+                        ))}
+                        <div className="py-3 cursor-pointer" onClick={NewStep}>
+                            <PlusSymbol width="1rem" height="1rem" />
+                        </div>
                     </div>
                 </div>
-                <div className="col-span-1 sm:col-span-2 px-5 mt-10">
-                    <hr className="border-recipe-orange" />
-                    <h1 className="w-full text-left text-2xl py-3 font-bold text-recipe-orange">STEPS:</h1>
-                    {steps.map((step, i) => (
-                        <Step step={step} index={i} steps={steps} setSteps={setSteps} key={"step" + i}/>
-                    ))}
-                    <div className="py-3 cursor-pointer" onClick={NewStep}>
-                        <PlusSymbol width="1rem" height="1rem" />
-                    </div>
-                </div>
             </div>
-        
-        </div>
         </div>
     );
 }

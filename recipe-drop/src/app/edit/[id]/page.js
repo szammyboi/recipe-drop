@@ -29,7 +29,7 @@ const EditPage = async ({params}) => {
     }
 
     return (
-        <div className="bg-recipe-tan h-auto min-h-screen w-screen">
+        <div className="bg-recipe-tan h-fit min-h-screen w-screen">
             <div className="px-6 flex justify-between py-2">
                 <h1 className="text-4xl font-bold text-recipe-orange my-auto">
                     <Link href="/recipes"><i>RECIPE DROP</i></Link>
