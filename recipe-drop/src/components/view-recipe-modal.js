@@ -29,7 +29,7 @@ export const ViewRecipeModal = ( entry, imageI ) => {
     else if (hours == 0 && minutes > 0)
         time = <h1>{minutes} {minutes == 1 ? "minute" : "minutes"}</h1>
 
-
+    // Define custom styling for the modal window. 
     const customStyling = {
         overlay: {
           backgroundColor: 'rgba(0, 0, 0, 0.6)'

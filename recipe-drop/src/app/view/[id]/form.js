@@ -7,6 +7,7 @@ import ClientSideNhost from "@/utils/client-nhost";
 import { DeleteRecipe, EditRecipe, EditRecipeDetails, EditRecipeImage, EditRecipeTitle } from "@/app/actions/recipes";
 import { useRouter } from "next/navigation";
 
+// Define the structure of the hoverable SVG upload box. 
 const UploadSVG = ({hovered}) => {
     return (
         <div className="flex flex-col items-center justify-center pt-5 pb-6 m-2">
@@ -19,6 +20,7 @@ const UploadSVG = ({hovered}) => {
     )
 };
 
+// Allow images to be previwed on the view page. 
 const ImagePreview = ({image_url}) => {
     return (
         <div className="rounded-md overflow-hidden">
@@ -27,10 +29,12 @@ const ImagePreview = ({image_url}) => {
     );
 };
 
+// Allow images to be uploaded on the view page. 
 const ImageUpload = ({initial, imageCallback}) => {
     let [image_url, setImage] = useState(initial ? initial : null);
     let [hovered, setHovered] = useState(false);
 
+    // When an image is uploaded, the file is sent to the server. 
     const onUpload = async (e) => {
         e.preventDefault();
 
@@ -45,6 +49,7 @@ const ImageUpload = ({initial, imageCallback}) => {
         }
     };
     
+    // Define the structure of the image viewer and uploader. 
     return (
         <div className="w-full relative p-2 border-2 border-recipe-orange border-dashed cursor-pointer" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
             <label  htmlFor="dropzone-file" className={"flex flex-col items-center justify-center cursor-pointer" + ((hovered && image_url == null) ?  " bg-recipe-orange " : " bg-recipe-tan ") +  "w-full aspect-square"} style={{transition: "background-color 0.15s ease-in-out"}}>
@@ -55,20 +60,24 @@ const ImageUpload = ({initial, imageCallback}) => {
     )
 }
 
+// Get the name of a month given its number in the year. 
 function getMonthName(monthNumber) {
     const date = new Date()
     date.setMonth(monthNumber) // starts with 0, so 0 is January
     return date.toLocaleString('en-EN', { month: "long" })
 }
 
-
+// Define the behavior of a displayed step. 
 const Step = ({step, steps, setSteps, index}) => {
+
+    // Allow a user to update the text for a given step. 
     const UpdateText = (updatedText) => {
          const newSteps = [...steps];
          newSteps[index] = updatedText;
          setSteps(newSteps);
     };
 
+    // Define the structure of a displayed step. 
     return (
         <div className="py-3">
             <h1><strong>Step {index+1}</strong></h1>
@@ -77,9 +86,11 @@ const Step = ({step, steps, setSteps, index}) => {
     )
 }
 
+// Define the behavior of a displayed ingredient. 
 const Ingredient = ({ingredient, ingredients, setIngredients, index}) => {
     const [text, setText] = useState(ingredient);
 
+    // Allow a user to update the text for a given ingredient. 
     const UpdateText = (updatedText) => {
         setText(updatedText);
 
@@ -88,6 +99,7 @@ const Ingredient = ({ingredient, ingredients, setIngredients, index}) => {
         setIngredients(newIngredients);
    };
 
+   // Define the structure of a displayed ingredient. 
     return (
         <div className="pt-3 w-full">
             <input value={text} onChange={(e) => UpdateText(e.target.value)} className="h-fit inline w-full text-left text-gray-700 text-md mb-4 appearance-none border-b border-slate-950 hover:border-recipe-orange focus:border-recipe-orange focus:outline-none rounded-none bg-recipe-tan" placeholder="NEW INGREDIENT" type="text"/>
@@ -96,7 +108,7 @@ const Ingredient = ({ingredient, ingredients, setIngredients, index}) => {
 }
 
 
-
+// Define the structure of the recipe view form. 
 const RecipeViewForm = ({recipeID, accessToken, initialRecipe}) => {
     const router = useRouter();
     
@@ -109,6 +121,7 @@ const RecipeViewForm = ({recipeID, accessToken, initialRecipe}) => {
 
     ClientSideNhost.storage.setAccessToken(accessToken);
     
+    // Save the data of a user's recipe to the server. 
     const Save = async () => {
         EditRecipeTitle(recipeID, title);
 
@@ -120,11 +133,13 @@ const RecipeViewForm = ({recipeID, accessToken, initialRecipe}) => {
         setDate(new Date());
     }
 
+    // Delete a user's chosen recipe to the server and redirect to the recipe view page. 
     const Delete = async () => {
         DeleteRecipe(recipeID);
         router.push("/recipes");
     };
 
+    // Allow a user to create a new ingredient. 
     const NewIngredient = () => {
         const newIngredients = [...ingredients];
         newIngredients.push("");
@@ -132,6 +147,7 @@ const RecipeViewForm = ({recipeID, accessToken, initialRecipe}) => {
         setIngredients(newIngredients);
     };
 
+    // Allow a user to create a new step. 
     const NewStep = () => {
         const newSteps = [...steps];
         newSteps.push("");
@@ -139,12 +155,14 @@ const RecipeViewForm = ({recipeID, accessToken, initialRecipe}) => {
         setSteps(newSteps);
     };
 
+    // If the image of the recipe does not match an uploaded image, change it to the newimage. 
     useEffect(() => {
         if (imageID != initialRecipe.image) {
             EditRecipeImage(recipeID, imageID);
         }
     }, [imageID])
 
+    // Define the structure of the recipe view form. 
     return (
         <div>
         <div className="px-[10%] pt-[5%] h-auto w-screen grid grid-cols-1 sm:grid-cols-3">

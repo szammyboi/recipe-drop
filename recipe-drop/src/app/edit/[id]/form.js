@@ -8,6 +8,7 @@ import { DeleteRecipe, EditRecipe, EditRecipeDetails, EditRecipeImage, EditRecip
 import { useRouter } from "next/navigation";
 import { PlusSymbol } from "@/components/graphics";
 
+// Defines the drag and drop/select box for modifying a recipe's image or adding a new one. 
 const UploadSVG = ({hovered}) => {
     return (
         <div className="flex flex-col items-center justify-center pt-5 pb-6 m-2">
@@ -20,6 +21,7 @@ const UploadSVG = ({hovered}) => {
     )
 };
 
+// Defines the image display that shows an image on the edit screen. 
 const ImagePreview = ({image_url}) => {
     return (
         <div className="rounded-md overflow-hidden">
@@ -28,6 +30,7 @@ const ImagePreview = ({image_url}) => {
     );
 };
 
+// Uploads an image to the server. 
 const ImageUpload = ({initial, imageCallback}) => {
     let [image_url, setImage] = useState(initial ? initial : null);
     let [hovered, setHovered] = useState(false);
@@ -46,6 +49,7 @@ const ImageUpload = ({initial, imageCallback}) => {
         }
     };
     
+    // Define the structure of the integrated system that previews an image and displays the upload image box.
     return (
         <div className="w-full relative p-2 border-2 border-recipe-orange border-dashed cursor-pointer" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
             <label  htmlFor="dropzone-file" className={"flex flex-col items-center justify-center cursor-pointer" + ((hovered && image_url == null) ?  " bg-recipe-orange " : " bg-recipe-tan ") +  "w-full aspect-square"} style={{transition: "background-color 0.15s ease-in-out"}}>
@@ -56,15 +60,18 @@ const ImageUpload = ({initial, imageCallback}) => {
     )
 }
 
+// Retreive a month name for a given number out of 12. 
 function getMonthName(monthNumber) {
     const date = new Date()
     date.setMonth(monthNumber) // starts with 0, so 0 is January
     return date.toLocaleString('en-EN', { month: "long" })
 }
 
+// Define a custom text entry box. 
 const CustomTextEntry = ({initial, placeholder, textCallback, color, styling}) => {
     const [text, setText] = useState(initial ? initial : placeholder);
 
+    // When the text is focused, and nothign is in it, show empty string. When text is being typed, show that text. 
     const onFocus = (e) => {
         if (e.target.textContent == placeholder)
             e.target.textContent = "";
@@ -72,6 +79,7 @@ const CustomTextEntry = ({initial, placeholder, textCallback, color, styling}) =
         textCallback(e.target.textContent);
     };
 
+    // When there is no text and it is not being edited, show the placeholder text. 
     const onBlur = (e) => {
         if (e.target.textContent == "")
             e.target.textContent = placeholder;
@@ -79,11 +87,13 @@ const CustomTextEntry = ({initial, placeholder, textCallback, color, styling}) =
         textCallback(e.target.textContent);
     }
 
+    // If the user tries to enter a newline, prevent it. 
     const onInput = (e) => {
         if (e.nativeEvent.data == '\n')
             e.preventDefault();
     }
 
+    // Define the structcure of this text entry system. 
     return (
         <div
             className={"select-text outline-none w-full h-max text-4xl py-2 font-bold relative ml-0 "
@@ -102,10 +112,12 @@ const CustomTextEntry = ({initial, placeholder, textCallback, color, styling}) =
     )
 }
 
+// Define a custom number entry system. 
 const CustomNumberEntry = ({initial, numberCallback}) => {
     const [hours, setHours] = useState(Math.floor(initial / 60));
     const [minutes, setMinutes] = useState(initial % 60);
 
+    // Display the correct time, or zero if no time has been entered. 
     useEffect(() => {
         if (hours != null || minutes != null) {
             const totalTime = (Number(hours) ? Number(hours) : 0) * 60 + (Number(minutes) ? Number(minutes) : 0);
@@ -113,6 +125,7 @@ const CustomNumberEntry = ({initial, numberCallback}) => {
         }
     }, [hours, minutes]);
     
+    // Define the structure of the custom number entry system for the time, modifying hours and minutes where necessary. 
     return (
         <div className="w-full h-fit ml-0  flex flex-col items-center justify-center text-xl text-slate-700">
             <div>
@@ -132,13 +145,17 @@ const CustomNumberEntry = ({initial, numberCallback}) => {
     )
 }
 
+// Define the behavior of a displayed step. 
 const Step = ({step, steps, setSteps, index}) => {
+
+    // Allow a user to modify the text of a step. 
     const UpdateText = (updatedText) => {
          const newSteps = [...steps];
          newSteps[index] = updatedText;
          setSteps(newSteps);
     };
 
+    // Define the structure of a displayed step. 
     return (
         <div className="py-3">
             <h1><strong>Step {index+1}</strong></h1>
@@ -147,9 +164,11 @@ const Step = ({step, steps, setSteps, index}) => {
     )
 }
 
+// Define the behavior of a displayed ingredient. 
 const Ingredient = ({ingredient, ingredients, setIngredients, index}) => {
     const [text, setText] = useState(ingredient);
 
+    // Allow a user to modify the text of an ingredient. 
     const UpdateText = (updatedText) => {
         setText(updatedText);
 
@@ -158,6 +177,7 @@ const Ingredient = ({ingredient, ingredients, setIngredients, index}) => {
         setIngredients(newIngredients);
    };
 
+   // Define the structure of a displayed ingredient. 
     return (
         <div className="pt-3 w-full">
             <input value={text} onChange={(e) => UpdateText(e.target.value)} className="h-fit inline w-full text-left text-gray-700 text-md mb-4 appearance-none border-b border-slate-950 hover:border-recipe-orange focus:border-recipe-orange focus:outline-none rounded-none bg-recipe-tan" placeholder="NEW INGREDIENT" type="text"/>
@@ -166,7 +186,7 @@ const Ingredient = ({ingredient, ingredients, setIngredients, index}) => {
 }
 
 
-
+// Define the behavior of the recipe creation form. 
 const RecipeCreationForm = ({recipeID, accessToken, initialRecipe}) => {
     const router = useRouter();
     
@@ -179,6 +199,7 @@ const RecipeCreationForm = ({recipeID, accessToken, initialRecipe}) => {
 
     ClientSideNhost.storage.setAccessToken(accessToken);
     
+    // Allow a user to save changes to a recipe. 
     const Save = async () => {
         EditRecipeTitle(recipeID, title);
 
@@ -190,11 +211,13 @@ const RecipeCreationForm = ({recipeID, accessToken, initialRecipe}) => {
         setDate(new Date());
     }
 
+    // Allow a user to delete a recipe, then redirect to recipe view page 
     const Delete = async () => {
         DeleteRecipe(recipeID);
         router.push("/recipes");
     };
 
+    // Allow a user to add new ingredients to the list. 
     const NewIngredient = () => {
         const newIngredients = [...ingredients];
         newIngredients.push("");
@@ -202,6 +225,7 @@ const RecipeCreationForm = ({recipeID, accessToken, initialRecipe}) => {
         setIngredients(newIngredients);
     };
 
+    // Allow a user to add new steps to the list. 
     const NewStep = () => {
         const newSteps = [...steps];
         newSteps.push("");
@@ -209,12 +233,14 @@ const RecipeCreationForm = ({recipeID, accessToken, initialRecipe}) => {
         setSteps(newSteps);
     };
 
+    // If the old image does not match the current image, update the recipe image. 
     useEffect(() => {
         if (imageID != initialRecipe.image) {
             EditRecipeImage(recipeID, imageID);
         }
     }, [imageID])
 
+    // Define the structure of the displayed recipe creation form, fully enabling edits and changes to all aspects of a recipe's attributes. 
     return (
         <div>
         <div className="px-[10%] pt-[5%] h-auto w-screen grid grid-cols-1 sm:grid-cols-3">

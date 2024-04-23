@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { NewRecipe } from "@/app/actions/recipes";
 import { PlusSymbol } from "./graphics";
 
+// Create a new recipe and route to the edit page. 
 const CreateRecipe = async (router) => {
     const {id, error} = await NewRecipe("", {}, null);
 
@@ -13,6 +14,7 @@ const CreateRecipe = async (router) => {
         router.push("/edit/" + id);
 };
 
+// Define the structure of the Add Recipe button. 
 export const AddRecipeButton = () => {
     const router = useRouter();
 
@@ -26,6 +28,7 @@ export const AddRecipeButton = () => {
     )
 };
 
+// Define the structure of the Add Recipe card that shows up with the recipes. 
 export const AddRecipeCard= () => {
     const router = useRouter();
 

@@ -1,3 +1,4 @@
+// Define the plus symbol-shaped svg. 
 export const PlusSymbol = ({width, height}, props) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
