@@ -9,6 +9,7 @@ import { getAuthClient } from "@/utils/nhost";
 import { GetRecipes, NewRecipe } from "@/app/actions/recipes";
 
 import Link from "next/link";
+import { useState} from "react";
 
 // Used to split time into hours and minutes. 
 const ParseTime = (time) => {
@@ -58,6 +59,30 @@ const RecipeItem = async ({auth, entry, image}) => {
 // Recipe cards are shown in a larger component that contains everything on the page. 
 const Recipes = async () => {
 
+  // state variables for search input and filters
+  const [searchInput, setSearchInput] = useState('');
+  const [filterCrit, setFilterCrit] = useState({
+    maxTime: '',
+    maxSteps: ''
+  });
+  const [sortOrder, setSortOrder] = useState('asc');
+
+  // handle search input change
+  const searchInputChange = (e) => {
+    setSearchInput(e.target.value);
+  }
+
+  // handle filter value change
+  const maxTimeChange = (e) => {
+    setFilterCrit({...filterCrit, maxTime: e.target.value});
+  }
+  const maxStepsChange = (e) => {
+    setFilterCrit({...filterCrit, maxSteps: e.target.value});
+  }
+  const sortOrderChange = (e) => {
+    setSortOrder(e.target.value)
+  }
+
   const auth = await getAuthClient();
 
   // Get recipe data from the server. 
@@ -69,6 +94,57 @@ const Recipes = async () => {
     // Constructs the recipe view page, creating a recipe card and a view button for each one. 
     return ( 
       <div className="bg-recipe-tan h-auto min-h-screen w-screen">
+        {/* search bar*/}
+        <div className="px-6 py-4">
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchInput}
+            onChange={searchInputChange}
+            className="px-4 py-2 border border-gray-300 rounded-md w-full"
+          />
+        </div>
+
+        {/* Filter dropdowns */}
+        <div className="px-6 py-4"> 
+          {/* Dropdown for time */}
+          <select
+            value={filterCrit.maxTime}
+            onChange={maxTimeChange}
+            className="px-4 py-2 border border-gray-300 rounded-md mr-4"
+          >
+            <option value="">F ilter by Max Time</option>
+            <option value="30">30 minutes or less</option>
+            <option value="60">Up to 1 hour</option>
+            <option value="90">Up to 1.5 hours</option>
+            <option value="120">Up to 2 hours</option>
+            <option value="121">More than 2 hours</option>
+          </select>
+
+          {/* Dropdown for steps */}
+          <select
+            value={filterCrit.maxSteps}
+            onChange={maxStepsChange}
+            className="px-4 py-2 border border-gray-300 rounded-md mr-4"
+          >
+            <option value="">Filter by Max steps</option>
+            <option value="5">5 steps or less</option>
+            <option value="10">Up to 10 steps</option>
+            <option value="11">More than 10 steps</option>
+          </select>
+
+          {/* Dropdown for sort order */}
+          <select 
+            value={sortOrder}
+            onChange={sortOrderChange}
+            className="px-4 py-2 border border-gray-300 rounded-md"
+          >
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
+        </div>
+
+      
         <div className="px-6 flex justify-between py-2">
           <h1 className="text-4xl font-bold text-recipe-orange my-auto"><i>RECIPE DROP</i></h1>
             <div className="px-6 py-4">
