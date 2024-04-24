@@ -52,7 +52,16 @@ export const ViewRecipeModal = ( entry, imageI ) => {
     // Format steps.
     let stepOutput;
     if (viewEntry.details.steps[0]){
-        stepOutput = <ul>{viewEntry.details.steps.map((step, index) => (<li key={index}>{index + 1}: {step}</li>))}</ul>
+        stepOutput = (
+            <ul>
+                {viewEntry.details.steps.map((step, index) => (
+                    <li key={index}>
+                        <input type="checkbox" id={`step${index}`}/>
+                        <label htmlFor={`step${index}`}>{index + 1}: {step}</label>
+                    </li>
+                ))}
+            </ul>
+        );
     }
     else {
         stepOutput = "No Steps!"
@@ -61,7 +70,16 @@ export const ViewRecipeModal = ( entry, imageI ) => {
     // Format ingredients.
     let ingredientOutput;
     if (viewEntry.details.ingredients[0]){
-        ingredientOutput = <ul>{viewEntry.details.ingredients.map((ingredient, index) => (<li key={index}>{index + 1}: {ingredient}</li>))}</ul>
+        ingredientOutput = (
+            <ul>
+                {viewEntry.details.ingredients.map((ingredient, index) => (
+                    <li key={index}>
+                        <input type="checkbox" id={`ingredient-${index}`}/>
+                        <label htmlFor={`ingredient-${index}`}>{index + 1}: {ingredient}</label>
+                    </li>
+                ))}
+            </ul>
+        );
     }
     else{ 
         ingredientOutput = "No Ingredients!"
